@@ -52,7 +52,7 @@ public class Auth_view extends JFrame {
 		Panel.setOpaque(true);
 		Panel.setSize(800, 800);
 		Panel.setLocation(0, 0);
-		//Panel.setLayout(null);
+		Panel.setLayout(null);
 
 		JLabel start = new JLabel("INICIAR SESIÓN");
 		start.setSize(300, 40);
