@@ -15,9 +15,9 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class Register extends JFrame {
+public class Register_view extends JFrame {
 	
-	public Register() {
+	public Register_view() {
 		
 		setVisible(true);
 		setSize(750, 600);
@@ -67,7 +67,7 @@ public class Register extends JFrame {
 		registro.add(Txt_name);
 		
 		JLabel Paternal_surname = new JLabel("Apellido Paterno:");
-		Paternal_surname.setSize(100, 40);
+		Paternal_surname.setSize(150, 40);
 		Paternal_surname.setLocation(200, 140);
 		//title2.setHorizontalAlignment(JLabel.CENTER);
 		Paternal_surname.setFont(new Font("Calibri", Font.BOLD, 15));
@@ -92,29 +92,42 @@ public class Register extends JFrame {
 		Txt_mother_surname.setFont(new Font("Calibri", Font.BOLD, 15));
 		registro.add(Txt_mother_surname);
 		
+		JLabel email = new JLabel("Correo Electronico:");
+		email.setSize(150, 40);
+		email.setLocation(200, 220);
+		//title3.setHorizontalAlignment(JLabel.CENTER);
+		email.setFont(new Font("Calibri", Font.BOLD, 15));
+		registro.add(email);
+		
+		JTextField Txt_email = new JTextField();
+		Txt_email.setSize(200, 20);
+		Txt_email.setLocation(350, 227);
+		Txt_email.setFont(new Font("Calibri", Font.BOLD, 15));
+		registro.add(Txt_email);
+		
 		JLabel Password = new JLabel("Contraseña:");
 		Password.setSize(100, 40);
-		Password.setLocation(50, 220);
+		Password.setLocation(200, 260);
 		//title4.setHorizontalAlignment(JLabel.CENTER);
 		Password.setFont(new Font("Calibri", Font.BOLD, 15));
 		registro.add(Password);
 		
 		JPasswordField Txt_password = new JPasswordField();
 		Txt_password.setSize(200, 20);
-		Txt_password.setLocation(190, 227);
+		Txt_password.setLocation(350, 267);
 		Txt_password.setFont(new Font("Calibri", Font.BOLD, 15));
 		registro.add(Txt_password);
 		
 		JLabel Confirm_password  = new JLabel("Confirmar Contraseña:");
-		Confirm_password.setSize(100, 40);
-		Confirm_password.setLocation(50, 260);
+		Confirm_password.setSize(150, 40);
+		Confirm_password.setLocation(200, 300);
 		//title5.setHorizontalAlignment(JLabel.CENTER);
 		Confirm_password.setFont(new Font("Calibri", Font.BOLD, 15));
 		registro.add(Confirm_password);
 		
 		JPasswordField Txt_confirm_password = new JPasswordField();
 		Txt_confirm_password.setSize(200, 20);
-		Txt_confirm_password.setLocation(190, 267);
+		Txt_confirm_password.setLocation(350, 307);
 		Txt_confirm_password.setFont(new Font("Calibri", Font.BOLD, 15));
 		registro.add(Txt_confirm_password);
 		
@@ -164,35 +177,48 @@ public class Register extends JFrame {
 
 				}
 				
-				
-				boolean flag4 = false;////////////////////////////////////////////////////////
-				if (Txt_password.getText().equals("")) {
-
+				boolean flag4 = false, flag5 = false;
+				if (!Txt_password.equals(Txt_confirm_password)) {
+					
 					Txt_password.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+					Txt_confirm_password.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+
+					
+					JOptionPane.showMessageDialog(null,"Las contraseñas no coinciden","Error",JOptionPane.ERROR_MESSAGE);
+				}
+				else {
+					Txt_password.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
+					Txt_confirm_password.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
+					
+					JOptionPane.showMessageDialog(null,"coinciden","correcto", getDefaultCloseOperation());
+					
+					flag4 = true;
+					flag5 = true;
+
 				}
 
+				/*boolean flag4 = false;
+				if (!Txt_password.equals(Txt_confirm_password)) {
+					Txt_password.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+					
+					JOptionPane.showMessageDialog(null,"Las contraseñas no coinciden","Error",JOptionPane.ERROR_MESSAGE);
+				}
+				
 				else {
 					Txt_password.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
 					flag4 = true;
 
-				}
-				
-				
-				boolean flag5 = false;///////////////////////////////////////////////////////////
-				if (Txt_confirm_password.getText().equals("")) {
-
-					Txt_confirm_password.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-				}
-
-				else {
-					Txt_confirm_password.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
-					flag5 = true;
-
-				}
+				}*/
 				
 
 				if (flag1 && flag2 && flag3 && flag4 && flag5) {
 					JOptionPane.showMessageDialog(null, "Usuario creado");
+							
+					Dashboard_view dashboard = new Dashboard_view();
+							
+					dashboard.dashboard();
+							
+					dispose();
 				}
 
 			}
@@ -203,6 +229,19 @@ public class Register extends JFrame {
 		Cancelar.setSize(120, 40);
 		Cancelar.setLocation(350, 480);
 		Cancelar.setFont(new Font("Calibri", Font.BOLD, 15));
+		Cancelar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				Auth_view login = new Auth_view();
+				
+				login.login();
+		        
+		        dispose();
+				
+			}
+		});
 		registro.add(Cancelar);
 		
 		JButton volver = new JButton("Volver");

@@ -132,6 +132,10 @@ public class Auth_view extends JFrame {
 				if (flag1 && flag2) {
 					JOptionPane.showMessageDialog(null, "REGISTRO EXITOSO");
 					
+					Dashboard_view dashboard = new Dashboard_view();
+					dashboard.dashboard();
+					dispose();
+					
 				}
 
 			}
@@ -147,15 +151,17 @@ public class Auth_view extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				Register register = new Register();
+				Register_view register_view = new Register_view();
 				
-				register.register();
+				register_view.register();
 				
 				dispose();
 
 			}
 		});
 		Panel.add(register);
+		
+		
 
 		//this.repaint();
 
