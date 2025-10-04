@@ -36,6 +36,8 @@ public class User_model {
             pstmt.setString(4, email);
             pstmt.setString(5, password); 
                         
+            int affectedRows = pstmt.executeUpdate(); // Faltaba esta línea me lleva la VRG
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
