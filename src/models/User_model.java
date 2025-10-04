@@ -18,16 +18,16 @@ public class User_model {
 	DBConfig credentials = new DBConfig();
 	
 	String url = credentials.getUrl();
-	String userName = credentials.getUsername();
-	String passwordC = credentials.getPassword();
+	String userNameDB = credentials.getUsername();
+	String passwordDB = credentials.getPassword();
 
-	
+	//AQUI REGISTRAMOS A UN NUEVO USUARIO
 	public boolean registerUser(String firstName, String lastName, String maternalSurname, 
             String email, String password){
         
         String sql = "INSERT INTO users (first_name, last_name, maternal_surname, email, password) VALUES (?, ?, ?, ?, ?)";
         
-        try (Connection conn = DriverManager.getConnection(url, userName, passwordC);
+        try (Connection conn = DriverManager.getConnection(url, userNameDB, passwordDB);
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             
         	pstmt.setString(1, firstName);
@@ -43,5 +43,54 @@ public class User_model {
         }
         return false;
     }
+	
+	// Verificar si un email existe
+	public boolean emailExists(String email) {
+	    String sql = "SELECT id FROM users WHERE email = ?";
+	    
+	    try (Connection conn = DriverManager.getConnection(url, userNameDB, passwordDB);
+	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	        
+	        pstmt.setString(1, email);
+	        ResultSet rs = pstmt.executeQuery();
+	        
+	        return rs.next(); // Retorna true si existe, false si no
+	        //IMPORTANTE
+	        
+	    } catch (SQLException e) {
+	        System.err.println("Error verificando email: " + e.getMessage());
+	        return false;
+	    }
+	}
+	
+	//AQUI OPTENEMOS LAS CUENTAS QUE TIENE EL USUARIO
+	public List<Account> getUserAccounts(int userId) {
+	    List<Account> accounts = new ArrayList<>();
+	    String sql = "SELECT * FROM accounts WHERE user_id = ?";
+	    
+	    try (Connection conn = DriverManager.getConnection(url, userNameDB, passwordDB);
+	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	        
+	        pstmt.setInt(1, userId);
+	        ResultSet rs = pstmt.executeQuery();
+	        
+	        while (rs.next()) {
+	            Account account = new Account();
+	            account.setId(rs.getInt("id"));
+	            account.setAccountNumber(rs.getString("account_number"));
+	            account.setAccountType(rs.getString("account_type"));
+	            account.setBalance(rs.getDouble("balance"));
+	            account.setUserId(rs.getInt("user_id"));
+	            accounts.add(account);
+	        }
+	        
+	        System.out.println("Cuentas encontradas: " + accounts.size());
+	        
+	    } catch (SQLException e) {
+	        System.out.println("Error al obtener cuentas: " + e.getMessage());
+	    }
+	    
+	    return accounts;
+	}
 	
 }

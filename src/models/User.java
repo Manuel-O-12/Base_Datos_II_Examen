@@ -1,6 +1,7 @@
 package models;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 
 public class User {
@@ -11,9 +12,9 @@ public class User {
     private String maternalSurname;
     private String email;
     private String password;
-    private Date createdAt;
+    private Timestamp createdAt;
 	
-    public User(int id, String firstName, String lastName, String maternalSurname, String email, String password) {
+    public User(int id, String firstName, String lastName, String maternalSurname, String email, String password, Timestamp createdAt) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -22,6 +23,10 @@ public class User {
         this.password = password;
         this.createdAt = createdAt;
     }
+
+	public User() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public int getId() {
 		return id;
@@ -71,11 +76,11 @@ public class User {
 		this.password = password;
 	}
 
-	public Date getCreatedAt() {
+	public Timestamp getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(Date createdAt) {
+	public void setCreatedAt(Timestamp createdAt) {
 		this.createdAt = createdAt;
 	}
     
