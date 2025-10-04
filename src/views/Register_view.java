@@ -15,6 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import models.User_model;
+
 public class Register_view extends JFrame {
 	
 	public Register_view() {
@@ -177,25 +179,25 @@ public class Register_view extends JFrame {
 
 				}
 				
-				boolean flag4 = false, flag5 = false;
-				if (!Txt_password.equals(Txt_confirm_password)) {
-					
-					Txt_password.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-					Txt_confirm_password.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-
-					
-					JOptionPane.showMessageDialog(null,"Las contraseñas no coinciden","Error",JOptionPane.ERROR_MESSAGE);
-				}
-				else {
-					Txt_password.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
-					Txt_confirm_password.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
-					
-					JOptionPane.showMessageDialog(null,"coinciden","correcto", getDefaultCloseOperation());
-					
-					flag4 = true;
-					flag5 = true;
-
-				}
+//				boolean flag4 = false, flag5 = false;
+//				if (!Txt_password.equals(Txt_confirm_password)) {
+//					
+//					Txt_password.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+//					Txt_confirm_password.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+//
+//					
+//					JOptionPane.showMessageDialog(null,"Las contraseñas no coinciden","Error",JOptionPane.ERROR_MESSAGE);
+//				}
+//				else {
+//					Txt_password.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
+//					Txt_confirm_password.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
+//					
+//					JOptionPane.showMessageDialog(null,"coinciden","correcto", getDefaultCloseOperation());
+//					
+//					flag4 = true;
+//					flag5 = true;
+//
+//				}
 
 				/*boolean flag4 = false;
 				if (!Txt_password.equals(Txt_confirm_password)) {
@@ -211,7 +213,18 @@ public class Register_view extends JFrame {
 				}*/
 				
 
-				if (flag1 && flag2 && flag3 && flag4 && flag5) {
+				if (flag1 && flag2 && flag3) {
+					
+					String name = Txt_name.getText();
+					String paternalSurname = Txt_paternal_surname.getText().trim();
+					String motherSurname = Txt_mother_surname.getText().trim();
+					String email = Txt_email.getText().trim();
+					String password = Txt_password.getText().trim();
+					
+					User_model um = new User_model();
+					
+					um.registerUser(name, paternalSurname, motherSurname, email, password);
+					
 					JOptionPane.showMessageDialog(null, "Usuario creado");
 							
 					Dashboard_view dashboard = new Dashboard_view();
