@@ -44,6 +44,35 @@ public class User_model {
         return false;
     }
 	
+	// AQUI OBTENEMOS SOLO LOS DATOS BÁSICOS DEL USUARIO
+	public User getBasicUserInfo(int userId) {
+	    String sql = "SELECT id, first_name, last_name, maternal_surname, email, created_at FROM users WHERE id = ?";
+	    
+	    try (Connection conn = DriverManager.getConnection(url, userNameDB, passwordDB);
+	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	        
+	        pstmt.setInt(1, userId);
+	        ResultSet rs = pstmt.executeQuery();
+	        
+	        if (rs.next()) {
+	            User user = new User();
+	            user.setId(rs.getInt("id"));
+	            user.setFirstName(rs.getString("first_name"));
+	            user.setLastName(rs.getString("last_name"));
+	            user.setMaternalSurname(rs.getString("maternal_surname"));
+	            user.setEmail(rs.getString("email"));
+	            user.setCreatedAt(rs.getTimestamp("created_at"));
+	            
+	            return user;
+	        }
+	        
+	    } catch (SQLException e) {
+	        System.err.println("Error obteniendo información básica por ID: " + e.getMessage());
+	    }
+	    
+	    return null;
+	}
+	
 	// Verificar si un email existe
 	public boolean emailExists(String email) {
 	    String sql = "SELECT id FROM users WHERE email = ?";

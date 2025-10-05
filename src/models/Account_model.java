@@ -39,9 +39,7 @@ public class Account_model {
         }
         return false;
     }
-    
- 
-    
+    	
     // Método para obtener todas las cuentas de un usuario
     public List<Account> getUserAccounts(int userId) {
         List<Account> accounts = new ArrayList<>();

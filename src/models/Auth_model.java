@@ -54,7 +54,7 @@ public class Auth_model {
 	        }
 	        
 	    } catch (SQLException e) {
-	        System.err.println("❌ ERROR EN INICIO DE SESIÓN: " + e.getMessage());
+	        System.err.println("ERROR EN INICIO DE SESIÓN: " + e.getMessage());
 	        e.printStackTrace();
 	        return null;
 	    }

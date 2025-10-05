@@ -25,6 +25,10 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
+import controller.User_controller;
+import models.Auth_model;
+import models.User;
+
 public class Auth_view extends JFrame {
 
 	public Auth_view() {
@@ -129,15 +133,34 @@ public class Auth_view extends JFrame {
 					flag2 = true;
 				}
 
-				if (flag1 && flag2) {
-					JOptionPane.showMessageDialog(null, "REGISTRO EXITOSO");
-					
-					Dashboard_view dashboard = new Dashboard_view();
-					dashboard.dashboard();
-					dispose();
-					
-				}
+//				if (flag1 && flag2) {
+//					JOptionPane.showMessageDialog(null, "REGISTRO EXITOSO");
+//					
+//					Dashboard_view dashboard = new Dashboard_view();
+//					dashboard.dashboard();
+//					dispose();
+//					
+//				}
+				
+				//definimos las variable
+				String email = accountText.getText();
+				String password = new String( passwordText.getPassword());
+//		        String passIngresada = new String(password.getPassword());
 
+				//llamamos al model donde se llama a la bd y verifica 
+				// si la contraseña con el correo conside
+				Auth_model am = new Auth_model();
+				User user = am.login(email, password);
+				
+				//si, si conside mandara un user que es el bueno
+				if(user != null) {
+					dispose();
+					JOptionPane.showMessageDialog(null, "REGISTRO EXITOSO");
+					User_controller uc = new User_controller();
+					uc.user_dashboard(user.getId());	
+				}else {
+					//poner mesaje de que nel carnal tu no eres tu
+				}
 			}
 		});
 		Panel.add(access);
@@ -160,9 +183,7 @@ public class Auth_view extends JFrame {
 			}
 		});
 		Panel.add(register);
-		
-		
-
+	
 		//this.repaint();
 
 		return Panel;
