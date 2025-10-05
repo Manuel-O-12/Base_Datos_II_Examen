@@ -35,10 +35,29 @@ public class Account_model {
             }
             
         } catch (SQLException e) {
-            System.err.println("Error creando cuenta: " + e.getMessage());
+            System.out.println("Error creando cuenta: " + e.getMessage());
         }
         return false;
     }
+    
+    // Verificar si un email existe
+ 	public boolean emailExists(String email) {
+ 	    String sql = "SELECT id FROM users WHERE email = ?";
+ 	    
+ 	    try (Connection conn = DriverManager.getConnection(url, userNameDB, passwordDB);
+ 	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+ 	        
+ 	        pstmt.setString(1, email);
+ 	        ResultSet rs = pstmt.executeQuery();
+ 	        
+ 	        return rs.next(); // Retorna true si existe, false si no
+ 	        //IMPORTANTE
+ 	        
+ 	    } catch (SQLException e) {
+ 	        System.err.println("Error verificando email: " + e.getMessage());
+ 	        return false;
+ 	    }
+ 	}
     	
     // Método para obtener todas las cuentas de un usuario
     public List<Account> getUserAccounts(int userId) {
@@ -54,7 +73,7 @@ public class Account_model {
             while (rs.next()) {
                 Account account = new Account();
                 account.setId(rs.getInt("id"));
-                account.setAccountNumber(rs.getString("account_number"));
+                account.setAccountNumber(rs.getInt("account_number"));
                 account.setAccountType(rs.getString("account_type"));
                 account.setBalance(rs.getDouble("balance"));
                 account.setUserId(rs.getInt("user_id"));
@@ -63,7 +82,7 @@ public class Account_model {
             }
             
         } catch (SQLException e) {
-            System.err.println("Error obteniendo cuentas: " + e.getMessage());
+            System.out.println("Error obteniendo cuentas: " + e.getMessage());
         }
         
         return accounts;

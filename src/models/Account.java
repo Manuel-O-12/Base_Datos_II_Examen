@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 public class Account {
 
 	private int id;
-	private String accountNumber;
+	private int accountNumber;
 	private String accountType; // Normal o premium
 	private double balance;
 	private int userId;
@@ -15,7 +15,7 @@ public class Account {
 		
 	}
 	
-	public Account(String accountNumber, String accountType, double balance, int userId) {
+	public Account(int accountNumber, String accountType, double balance, int userId) {
         this.accountNumber = accountNumber;
         this.accountType = accountType;
         this.balance = balance;
@@ -30,11 +30,11 @@ public class Account {
 		this.id = id;
 	}
 
-	public String getAccountNumber() {
+	public int getAccountNumber() {
 		return accountNumber;
 	}
 
-	public void setAccountNumber(String accountNumber) {
+	public void setAccountNumber(int accountNumber) {
 		this.accountNumber = accountNumber;
 	}
 

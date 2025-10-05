@@ -180,7 +180,7 @@ public class Transaction_model {
                     ex.printStackTrace();
                 }
             }
-            System.err.println("❌ Error en transferencia: " + e.getMessage());
+            System.err.println("Error en transferencia: " + e.getMessage());
             return false;
         } finally {
             if (conn != null) {

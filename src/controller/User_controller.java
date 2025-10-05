@@ -29,4 +29,16 @@ public class User_controller {
 		view.dashboard(myUser, myAccount);
         this.view.setVisible(true);
 	}
+	
+	public void create_user_account() {
+		
+		//aqui iria el el view de cracion de la cuenta ejem:
+		//view.create_account
+	}
+	
+	public void user_tranfer() {
+		
+		//se pondria el view de transferenacia ejem:
+		//view.create_user_account
+	}
 }

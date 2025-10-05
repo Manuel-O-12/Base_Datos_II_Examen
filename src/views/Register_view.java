@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import models.Account_model;
 import models.User_model;
 
 public class Register_view extends JFrame {
@@ -221,8 +222,11 @@ public class Register_view extends JFrame {
 					String email = Txt_email.getText().trim();
 					String password = Txt_password.getText().trim();
 					
-					User_model um = new User_model();
+					// aqui ya te cree el model para verificar que no se registre un correo
+					//que ya este registrado revisar el account model, llamar al modelo que tien metodo que es un bollean
 					
+					
+					User_model um = new User_model();
 					um.registerUser(name, paternalSurname, motherSurname, email, password);
 					
 					JOptionPane.showMessageDialog(null, "Usuario creado");
@@ -230,7 +234,6 @@ public class Register_view extends JFrame {
 					Dashboard_view dashboard = new Dashboard_view();
 							
 					dashboard.dashboard();
-							
 					dispose();
 				}
 
