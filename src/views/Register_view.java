@@ -190,14 +190,14 @@ public class Register_view extends JFrame {
 					Txt_confirm_password.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
 
 					
-					JOptionPane.showMessageDialog(null,"Las contraseñas no coinciden","Error",JOptionPane.ERROR_MESSAGE);
+					//JOptionPane.showMessageDialog(null,"Las contraseñas no coinciden","Error",JOptionPane.ERROR_MESSAGE);
 				}
 				else if (!password.equals(confirm_password)){
 					
 					Txt_password.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
 					Txt_confirm_password.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
 					
-					JOptionPane.showMessageDialog(null,"Las contraseñas no coinciden","Error",JOptionPane.ERROR_MESSAGE);
+					//JOptionPane.showMessageDialog(null,"Las contraseñas no coinciden","Error",JOptionPane.ERROR_MESSAGE);
 
 					
 				}
@@ -206,7 +206,7 @@ public class Register_view extends JFrame {
 					Txt_password.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
 					Txt_confirm_password.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
 					
-					JOptionPane.showMessageDialog(null,"coinciden","correcto", getDefaultCloseOperation());
+					//JOptionPane.showMessageDialog(null,"coinciden","correcto", getDefaultCloseOperation());
 					
 					flag4 = true;
 				}
@@ -218,7 +218,7 @@ public class Register_view extends JFrame {
 				if (email.equals("")) {
 					Txt_email.setBorder(BorderFactory.createLineBorder(Color.RED,3));
 					
-					JOptionPane.showMessageDialog(null, "El correo electrónico no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
+					//JOptionPane.showMessageDialog(null, "El correo electrónico no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 				else {
 					
@@ -228,7 +228,7 @@ public class Register_view extends JFrame {
 					if (emailExists) {
 						Txt_email.setBorder(BorderFactory.createLineBorder(Color.RED,3));
 						
-                        JOptionPane.showMessageDialog(null, "El correo electrónico ya está registrado", "Error", JOptionPane.ERROR_MESSAGE);
+                        //JOptionPane.showMessageDialog(null, "El correo electrónico ya está registrado", "Error", JOptionPane.ERROR_MESSAGE);
 
 					}
 					 else {
@@ -256,9 +256,10 @@ public class Register_view extends JFrame {
 					
 					JOptionPane.showMessageDialog(null, "Usuario creado");
 							
-					Dashboard_view dashboard = new Dashboard_view();
-							
-					dashboard.dashboard();
+					Auth_view login = new Auth_view();
+					
+					login.login();
+					
 					dispose();
 				}
 

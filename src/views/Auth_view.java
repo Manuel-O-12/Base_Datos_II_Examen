@@ -89,12 +89,6 @@ public class Auth_view extends JFrame {
 		passwordText.setFont(new Font("Calibri", Font.PLAIN, 15));
 		Panel.add(passwordText);
 
-		JLabel Olvido = new JLabel("¿Olvidaste tu contraseña?");
-		Olvido.setSize(200, 20);
-		Olvido.setLocation(250, 212);
-		Olvido.setFont(new Font("Calibri", Font.BOLD, 12));
-		Panel.add(Olvido);
-
 		JButton access = new JButton("ACCEDER");
 		access.setSize(120, 40);
 		access.setLocation(300, 270);
@@ -105,65 +99,52 @@ public class Auth_view extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				boolean flag1 = false;
-				if (accountText.getText().equals("")) {
+				boolean flag1 = true;
 
-					accountText.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-					JOptionPane.showMessageDialog(null, "Se deben de rellenar todos los campos");
-				}
+		        String email = accountText.getText().trim();
+		        String password = new String(passwordText.getPassword());
 
-				else {
-					accountText.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
-					flag1 = true;
+		        if (email.equals("")) {
+		            accountText.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+		            flag1 = false;
+		        } else {
+		            accountText.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
+		        }
 
-				}
+		        if (password.equals("")) {
+		            passwordText.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+		            flag1 = false;
+		        } else {
+		            passwordText.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
+		        }
 
-				String mypassword = new String(passwordText.getPassword());
+		        if (!flag1) {
+		            JOptionPane.showMessageDialog(null, "Se deben de rellenar todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+		            return;
+		        }
 
-				boolean flag2 = false;
-				if (mypassword.equals("")) {
+		        Auth_model am = new Auth_model();
+		        User user = am.login(email, password);
 
-					passwordText.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-					JOptionPane.showMessageDialog(null, "Se deben de rellenar todos los campos");
+		        //si, si conside mandara un user que es el bueno
+		        if (user != null) {
+		            accountText.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
+		            passwordText.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
 
-				}
+		            JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso");
 
-				else {
-					passwordText.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
-					flag2 = true;
-				}
+		            User_controller uc = new User_controller();
+		            uc.user_dashboard(user.getId());
 
-//				if (flag1 && flag2) {
-//					JOptionPane.showMessageDialog(null, "REGISTRO EXITOSO");
-//					
-//					Dashboard_view dashboard = new Dashboard_view();
-//					dashboard.dashboard();
-//					dispose();
-//					
-//				}
-				
-				//definimos las variable
-				String email = accountText.getText();
-				String password = new String( passwordText.getPassword());
-//		        String passIngresada = new String(password.getPassword());
+		            dispose();
+		        } else {
+	
+		            accountText.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+		            passwordText.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
 
-				//llamamos al model donde se llama a la bd y verifica 
-				// si la contraseña con el correo conside
-				Auth_model am = new Auth_model();
-				User user = am.login(email, password);
-				
-				//si, si conside mandara un user que es el bueno
-				if(user != null) {
-					dispose();
-					JOptionPane.showMessageDialog(null, "REGISTRO EXITOSO");
-					
-					User_controller uc = new User_controller();
-					uc.user_dashboard(user.getId());
-					
-				}else {
-					JOptionPane.showMessageDialog(null, "Error al rellenar los campos, asegurarse de tener todo correcto", "Error", JOptionPane.ERROR_MESSAGE);
-				}
-			}
+		            JOptionPane.showMessageDialog(null, "Correo o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+		        }
+		    }
 		});
 		Panel.add(access);
 
