@@ -261,6 +261,8 @@ public class User_view extends JFrame {
 		JPanel accounts = new JPanel();
 		accounts.setBackground(Color.decode("#c8eafa"));
 		accounts.setLayout(null);
+		
+		JLabel txt_number;
 
 		JLabel register = new JLabel("CREAR UNA NUEVA CUENTA");
 		register.setSize(500, 40);
@@ -275,10 +277,10 @@ public class User_view extends JFrame {
 		id.setFont(new Font("Calibri", Font.BOLD, 15));
 		accounts.add(id);
 		
-		JTextField txt_id = new JTextField(String.valueOf(user.getId()));
+		JLabel txt_id = new JLabel(String.valueOf(user.getId()));
 		txt_id.setSize(200, 20);
 		txt_id.setLocation(350, 110);
-		txt_id.setEditable(false);
+//		txt_id.setEditable(false);
 	    accounts.add(txt_id);
 		
 		JLabel type = new JLabel("Tipo de cuenta:");
@@ -299,25 +301,29 @@ public class User_view extends JFrame {
 		number.setFont(new Font("Calibri", Font.BOLD, 15));
 		accounts.add(number);
 		
-		JTextField txt_number = new JTextField();
+		txt_number = new JLabel();
 		txt_number.setSize(200, 20);
 		txt_number.setLocation(350, 200);
-		txt_number.setEditable(false);
+//		txt_number.setEditable(false);
 	    accounts.add(txt_number);
 	    
-	    JButton btn_trigger = new JButton("Generar número");
-	    btn_trigger.setSize(200, 30);
-	    btn_trigger.setLocation(350, 250);
-	    btn_trigger.setFont(new Font("Calibri", Font.BOLD, 15));
-	    btn_trigger.addActionListener(new ActionListener() {
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
-	            Random rand = new Random();
-	            int numeroCuenta = 10000000 + rand.nextInt(99999999);
-	            txt_number.setText(String.valueOf(numeroCuenta));
-	        }
-	    });
-		accounts.add(btn_trigger);
+	    Random rand = new Random();
+	    int numeroCuenta = 10000000 + rand.nextInt(90000000);
+	    txt_number.setText(String.valueOf(numeroCuenta));
+	    
+//	    JButton btn_trigger = new JButton("Generar número");
+//	    btn_trigger.setSize(200, 30);
+//	    btn_trigger.setLocation(350, 250);
+//	    btn_trigger.setFont(new Font("Calibri", Font.BOLD, 15));
+//	    btn_trigger.addActionListener(new ActionListener() {
+//	        @Override
+//	        public void actionPerformed(ActionEvent e) {
+//	            Random rand = new Random();
+//	            int numeroCuenta = 10000000 + rand.nextInt(99999999);
+//	            txt_number.setText(String.valueOf(numeroCuenta));
+//	        }
+//	    });
+//		accounts.add(btn_trigger);
 		
 		JButton create = new JButton("CREAR CUENTA");
 		create.setSize(150,30);
