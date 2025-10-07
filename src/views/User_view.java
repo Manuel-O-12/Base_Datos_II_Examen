@@ -6,11 +6,13 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTable;
@@ -77,7 +79,7 @@ public class User_view extends JFrame {
 				
 				User_view new_account = new User_view();
 				
-				new_account.new_account(rootPaneCheckingEnabled);
+				new_account.new_account(user);
 				
 				dispose();
 				
@@ -248,7 +250,7 @@ public class User_view extends JFrame {
 	}
 	
 	
-	public void new_account(boolean createAccount) {
+	public void new_account(User user) {
 		
 		setTitle("CREAR CUENTAS");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -267,75 +269,76 @@ public class User_view extends JFrame {
 		register.setFont(new Font("Calibri", Font.BOLD, 30));
 		accounts.add(register);
 		
+		JLabel id = new JLabel("ID");
+		id.setSize(200,40);
+		id.setLocation(200,100);
+		id.setFont(new Font("Calibri", Font.BOLD, 15));
+		accounts.add(id);
+		
+		JTextField txt_id = new JTextField(String.valueOf(user.getId()));
+		txt_id.setSize(200, 20);
+		txt_id.setLocation(350, 110);
+		txt_id.setEditable(false);
+	    accounts.add(txt_id);
+		
 		JLabel type = new JLabel("Tipo de cuenta:");
 		type.setSize(200, 40);
-		type.setLocation(200, 100);
+		type.setLocation(200, 150);
 		type.setFont(new Font("Calibri", Font.BOLD, 15));
 		accounts.add(type);
 
 		String[] account_type = {"Normal", "Premium"};
 		JComboBox<String> typecombobox = new JComboBox<>(account_type);
 		typecombobox.setSize(200, 20);
-		typecombobox.setLocation(350, 110);
+		typecombobox.setLocation(350, 150);
 		accounts.add(typecombobox);
 		
-//		JButton create = new JButton("CREAR CUENTA");
-//		create.setSize(150,30);
-//		create.setLocation(200, 160);
-//		create.setFont(new Font("Calibri", Font.BOLD, 15));
-//		create.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//
-//				String tipo = (String) typecombobox.getSelectedItem();
-//				int numero_cuenta = randomcuenta();
-//				
-//				
-//				
-//			}
+		JLabel number = new JLabel("Numero de cuenta");
+		number.setSize(200,20);
+		number.setLocation(200, 200);
+		number.setFont(new Font("Calibri", Font.BOLD, 15));
+		accounts.add(number);
+		
+		JTextField txt_number = new JTextField();
+		txt_number.setSize(200, 20);
+		txt_number.setLocation(350, 200);
+		txt_number.setEditable(false);
+	    accounts.add(txt_number);
+	    
+	    JButton btn_trigger = new JButton("Generar número");
+	    btn_trigger.setSize(200, 30);
+	    btn_trigger.setLocation(350, 250);
+	    btn_trigger.setFont(new Font("Calibri", Font.BOLD, 15));
+	    btn_trigger.addActionListener(new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            Random rand = new Random();
+	            int numeroCuenta = 10000000 + rand.nextInt(99999999);
+	            txt_number.setText(String.valueOf(numeroCuenta));
+	        }
+	    });
+		accounts.add(btn_trigger);
+		
+		JButton create = new JButton("CREAR CUENTA");
+		create.setSize(150,30);
+		create.setLocation(300, 560);
+		create.setFont(new Font("Calibri", Font.BOLD, 15));
+		create.addActionListener(new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            String tipo = (String) typecombobox.getSelectedItem();
+	            String numero = txt_number.getText();
 
-//			private int randomcuenta() {
-//
-//				int numero;
-//				boolean creado;
-//				
-//				Account_model model = new Account_model();
-//				
-//				do {
-//					numero = (int)(Math.random() * 99999999) + 10000000;
-//					creado = verificar_numero(numero);
-//					
-//				} while (creado);
-//				
-//				return numero;
-//			}
-			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			///
-			///
-			///					ESTA PARTE TIENE QUE IR EN LA BASE DE DATOS PARA VERIFICAR SI EN ESTA YA EXISTE EL NUMERO 
-			///					DEL RANDOM ESTO DE BASE DE DATOS ME LO DIO CHAT, Y DICE ESO QUE TENGO QUE MOVERLE A MODELS PERO NO QUIERO 
-			///					ARRUINAR ALGO DE AHI  
-			///
-			///
-			///
-//			public boolean verificar_numero(int accountNumber) {
-//			    String sql = "SELECT id FROM accounts WHERE account_number = ?";
-//			    
-//			    try (Connection conn = DriverManager.getConnection(url, userNameDB, passwordDB);
-//			         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-//			        
-//			        pstmt.setInt(1, accountNumber);
-//			        ResultSet rs = pstmt.executeQuery();
-//			        
-//			        return rs.next(); // Devuelve true si ya existe una cuenta con ese número
-//			        
-//			    } catch (SQLException e) {
-//			        System.out.println("Error verificando número de cuenta: " + e.getMessage());
-//			        return true; // Por precaución, asumimos que existe si hay error
-//			    }
-//			}
-//		});
+	            if (numero.isEmpty()) {
+	                JOptionPane.showMessageDialog(null, "Debes de generar un numero de cuenta");
+	                return;
+	            }
+
+	            JOptionPane.showMessageDialog(null,"Cuenta creada correctamente");
+	        }
+	    });
+		accounts.add(create);
+		
 		
 		JButton volver = new JButton("Volver");
 		volver.setSize(80, 30);
@@ -349,7 +352,7 @@ public class User_view extends JFrame {
 				
 				User_view user_view = new User_view();
 				
-				user_view.dashboard(null, null);
+				user_view.dashboard(user, null);
 
 				dispose();
 

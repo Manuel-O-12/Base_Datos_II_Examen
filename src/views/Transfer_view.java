@@ -64,7 +64,7 @@ public class Transfer_view  extends JFrame{
 		origin.setFont(new Font("Calibri", Font.BOLD, 15));
 		transfer.add(origin);
 		
-		JTextField accounsts = new JTextField();/////////////////////////
+		JTextField accounsts = new JTextField();///////////////////////// 
 		accounsts.setSize(200,20);
 		accounsts.setLocation(300, 100);
 		accounsts.setFont(new Font("Calibri", Font.BOLD, 15));
