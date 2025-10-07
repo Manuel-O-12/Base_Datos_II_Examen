@@ -180,47 +180,72 @@ public class Register_view extends JFrame {
 
 				}
 				
-//				boolean flag4 = false, flag5 = false;
-//				if (!Txt_password.equals(Txt_confirm_password)) {
-//					
-//					Txt_password.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-//					Txt_confirm_password.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-//
-//					
-//					JOptionPane.showMessageDialog(null,"Las contraseñas no coinciden","Error",JOptionPane.ERROR_MESSAGE);
-//				}
-//				else {
-//					Txt_password.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
-//					Txt_confirm_password.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
-//					
-//					JOptionPane.showMessageDialog(null,"coinciden","correcto", getDefaultCloseOperation());
-//					
-//					flag4 = true;
-//					flag5 = true;
-//
-//				}
-
-				/*boolean flag4 = false;
-				if (!Txt_password.equals(Txt_confirm_password)) {
+				boolean flag4 = false;
+				String password = new String(Txt_password.getPassword());
+                String confirm_password = new String(Txt_confirm_password.getPassword());
+				
+				if (password.isEmpty()) {
+					
 					Txt_password.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+					Txt_confirm_password.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+
 					
 					JOptionPane.showMessageDialog(null,"Las contraseñas no coinciden","Error",JOptionPane.ERROR_MESSAGE);
 				}
-				
+				else if (!password.equals(confirm_password)){
+					
+					Txt_password.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+					Txt_confirm_password.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+					
+					JOptionPane.showMessageDialog(null,"Las contraseñas no coinciden","Error",JOptionPane.ERROR_MESSAGE);
+
+					
+				}
 				else {
+					
 					Txt_password.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
+					Txt_confirm_password.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
+					
+					JOptionPane.showMessageDialog(null,"coinciden","correcto", getDefaultCloseOperation());
+					
 					flag4 = true;
+				}
+				
+				
+				boolean flag5 = false;
+				String email = Txt_email.getText().trim();
+				
+				if (email.equals("")) {
+					Txt_email.setBorder(BorderFactory.createLineBorder(Color.RED,3));
+					
+					JOptionPane.showMessageDialog(null, "El correo electrónico no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+				else {
+					
+					Account_model accountModel = new Account_model();
+					boolean emailExists = accountModel.emailExists(email);
+					
+					if (emailExists) {
+						Txt_email.setBorder(BorderFactory.createLineBorder(Color.RED,3));
+						
+                        JOptionPane.showMessageDialog(null, "El correo electrónico ya está registrado", "Error", JOptionPane.ERROR_MESSAGE);
 
-				}*/
+					}
+					 else {
+	                    Txt_email.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
+	                    flag5 = true;
+	                }
+				}
+				
 				
 
-				if (flag1 && flag2 && flag3) {
+				if (flag1 && flag2 && flag3 && flag5 && flag4) {
 					
 					String name = Txt_name.getText();
 					String paternalSurname = Txt_paternal_surname.getText().trim();
 					String motherSurname = Txt_mother_surname.getText().trim();
-					String email = Txt_email.getText().trim();
-					String password = Txt_password.getText().trim();
+					email = Txt_email.getText().trim();
+					password = Txt_password.getText().trim();
 					
 					// aqui ya te cree el model para verificar que no se registre un correo
 					//que ya este registrado revisar el account model, llamar al modelo que tien metodo que es un bollean

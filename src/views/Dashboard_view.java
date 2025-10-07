@@ -64,22 +64,22 @@ public class Dashboard_view extends JFrame {
         Btn_new_account.setFont(new Font("Calibri", Font.BOLD, 15));
         dashboard.add(Btn_new_account);
         
-        JButton Btn_transfer = new JButton("Realizar Transferencia");
-        Btn_transfer.setSize(200,30);
-        Btn_transfer.setLocation(50, 200);
-        Btn_transfer.setFont(new Font("Calibri", Font.BOLD, 15));
-        Btn_transfer.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				Transfer_view trafer = new Transfer_view();
-				trafer.transfer();
-				dispose();
-				
-			}
-		});
-        dashboard.add(Btn_transfer);
+//        JButton Btn_transfer = new JButton("Realizar Transferencia");
+//        Btn_transfer.setSize(200,30);
+//        Btn_transfer.setLocation(50, 200);
+//        Btn_transfer.setFont(new Font("Calibri", Font.BOLD, 15));
+//        Btn_transfer.addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				
+//				Transfer_view trafer = new Transfer_view();
+//				trafer.transfer();
+//				dispose();
+//				
+//			}
+//		});
+//        dashboard.add(Btn_transfer);
         
         JButton Btn_accounts = new JButton("Ver Mis Cuentas");
         Btn_accounts.setSize(200,30);

@@ -95,7 +95,7 @@ public class Auth_view extends JFrame {
 		Olvido.setFont(new Font("Calibri", Font.BOLD, 12));
 		Panel.add(Olvido);
 
-		JButton access = new JButton("Acceder");
+		JButton access = new JButton("ACCEDER");
 		access.setSize(120, 40);
 		access.setLocation(300, 270);
 		access.setFont(new Font("Calibri", Font.BOLD, 15));
@@ -156,16 +156,18 @@ public class Auth_view extends JFrame {
 				if(user != null) {
 					dispose();
 					JOptionPane.showMessageDialog(null, "REGISTRO EXITOSO");
+					
 					User_controller uc = new User_controller();
-					uc.user_dashboard(user.getId());	
+					uc.user_dashboard(user.getId());
+					
 				}else {
-					//poner mesaje de que nel carnal tu no eres tu
+					JOptionPane.showMessageDialog(null, "Error al rellenar los campos, asegurarse de tener todo correcto", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
 		Panel.add(access);
 
-		JButton register = new JButton("registro");
+		JButton register = new JButton("REGISTRO");
 		register.setSize(120, 40);
 		register.setLocation(300, 320);
 		register.setFont(new Font("Calibri", Font.BOLD, 15));
