@@ -127,14 +127,7 @@ public class User_view extends JFrame {
 		Btn_logout.setSize(200, 30);
 		Btn_logout.setLocation(50, 300);
 		Btn_logout.setFont(new Font("Calibri", Font.BOLD, 15));
-		dashboard.add(Btn_logout);
-
-		JButton volver = new JButton("Volver");
-		volver.setSize(80, 30);
-		volver.setLocation(10, 10);
-		volver.setHorizontalTextPosition(JButton.CENTER);
-		volver.setFont(new Font("Calibri", Font.BOLD, 15));
-		volver.addActionListener(new ActionListener() {
+		Btn_logout.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -147,7 +140,7 @@ public class User_view extends JFrame {
 
 			}
 		});
-		dashboard.add(volver);
+		dashboard.add(Btn_logout);
 
 		// leftPanel.add(btnCerrarSesion);
 		

@@ -275,9 +275,9 @@ public class Transfer_view  extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				Auth_view login = new Auth_view();
-
-				login.login();
+				Register_view volver = new Register_view();
+				
+				volver.register();
 
 				dispose();
 
