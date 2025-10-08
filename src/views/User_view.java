@@ -97,7 +97,7 @@ public class User_view extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				Transfer_view transfer = new Transfer_view();
-				transfer.transfer(accounts);
+				transfer.setUserData(user, accounts);
 				dispose();
 
 			}
@@ -180,7 +180,7 @@ public class User_view extends JFrame {
 		// SE CREO LA TABLA CON LAS CUENTAS PERO ESTA EN BLANCO YA QUE NO HAY CUENTAS, TAMBIEN SE CREO PARA QUE NO SEA EDITABLE 
 		//YA QUE SE TOMO DE LA RENTA DE PELICULAS
 		
-	    String[] columnNames = { "ID", "account_number", "account_type", "balance", "user_id", "created_at" };
+	    String[] columnNames = { "ID", "account_number", "account_type", "balance","created_at",  };
 		DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
 			@Override
 			public boolean isCellEditable(int row, int column) {

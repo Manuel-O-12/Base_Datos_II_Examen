@@ -22,10 +22,20 @@ import javax.swing.border.LineBorder;
 import models.Account;
 import models.Account_model;
 import models.Transaction_model;
+import models.User;
 
 
 
 public class Transfer_view  extends JFrame{
+	
+	private User currentUser;
+	private List<Account> currentAccounts;
+
+	public void setUserData(User user, List<Account> accounts) {
+	    this.currentUser = user;
+	    this.currentAccounts = accounts;
+	    transfer(accounts);
+	}
 
 	public Transfer_view() {
 			
@@ -283,9 +293,12 @@ public class Transfer_view  extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				Register_view volver = new Register_view();
-				
-				volver.register();
+				if (currentUser != null) {
+		            User_view userView = new User_view();
+		            userView.dashboard(currentUser, currentAccounts);
+		        } else {
+		            JOptionPane.showMessageDialog(null, "Error: No se encontró la información del usuario.");
+		        }
 
 				dispose();
 
