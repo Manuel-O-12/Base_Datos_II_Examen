@@ -25,7 +25,15 @@ Muestra todas las opciones que puede hacer el usuario como crear mas cuentas, re
  
 ## 📸 Capturas
 
+<img src="https://github.com/user-attachments/assets/9674464d-8f44-423b-8a3c-8350864f638c" alt="Login" width="200">
 
+<img src="https://github.com/user-attachments/assets/a38c9c21-9a4a-40d4-9320-490364978410" alt="panel principal" width="200">
+
+
+<img src="https://github.com/user-attachments/assets/873731a2-adc8-4937-8204-cb5951d76334" alt="Crear cuenta" width="200">
+
+
+<img src="https://github.com/user-attachments/assets/fbded01e-010e-4916-b27d-bed4e2a761c3" alt="Transacciones" width="200">
 
 ##
 
