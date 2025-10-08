@@ -242,7 +242,6 @@ public class User_view extends JFrame {
 		
 	}
 	
-	
 	public void new_account(User user) {
 		
 		setTitle("CREAR CUENTAS");
@@ -325,13 +324,18 @@ public class User_view extends JFrame {
 		create.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
+	        	int idUser = user.getId();
 	            String tipo = (String) typecombobox.getSelectedItem();
 	            String numero = txt_number.getText();
-
+	            int numeroCuenat = Integer.parseInt(numero);
+	            
 	            if (numero.isEmpty()) {
 	                JOptionPane.showMessageDialog(null, "Debes de generar un numero de cuenta");
 	                return;
 	            }
+	            
+	            Account_model am = new Account_model();
+	            am.createAccount(idUser, tipo, numeroCuenat);
 
 	            JOptionPane.showMessageDialog(null,"Cuenta creada correctamente");
 	        }

@@ -21,6 +21,7 @@ import javax.swing.border.LineBorder;
 
 import models.Account;
 import models.Account_model;
+import models.Transaction_model;
 
 
 
@@ -226,6 +227,7 @@ public class Transfer_view  extends JFrame{
                 	area_description.setBorder(normalBorder);
                 }
                 
+                
                 // Validar que el monto sea un número válido y positivo
                 try {
                     double monto = Double.parseDouble(txt_amount.getText().trim());
@@ -257,6 +259,12 @@ public class Transfer_view  extends JFrame{
                 txt_destination.setBorder(normalBorder);
                 txt_amount.setBorder(normalBorder);
                 area_description.setBorder(normalBorder);
+                
+                Double monto_transfer = Double.parseDouble(txt_amount.getText().trim());
+                
+                Transaction_model tm = new Transaction_model();
+                tm.transfer(txt_origin.getText(), txt_destination.getText(), monto_transfer);
+                
                 // Si pasa todas las validaciones, proceder con la transferencia
                 JOptionPane.showMessageDialog(null, "Transferencia realizada correctamente");
                 // Aquí iría la lógica real de la transferencia
