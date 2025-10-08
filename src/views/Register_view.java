@@ -14,6 +14,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+
+import com.formdev.flatlaf.FlatLightLaf;
 
 import models.Account_model;
 import models.User_model;
@@ -228,7 +231,7 @@ public class Register_view extends JFrame {
 					if (emailExists) {
 						Txt_email.setBorder(BorderFactory.createLineBorder(Color.RED,3));
 						
-                        //JOptionPane.showMessageDialog(null, "El correo electrónico ya está registrado", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "El correo electrónico ya está registrado", "Error", JOptionPane.ERROR_MESSAGE);
 
 					}
 					 else {

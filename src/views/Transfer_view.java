@@ -19,6 +19,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
+import controller.User_controller;
 import models.Account;
 import models.Account_model;
 import models.Transaction_model;
@@ -273,10 +274,14 @@ public class Transfer_view  extends JFrame{
                 Double monto_transfer = Double.parseDouble(txt_amount.getText().trim());
                 
                 Transaction_model tm = new Transaction_model();
-                tm.transfer(txt_origin.getText(), txt_destination.getText(), monto_transfer);
+                Boolean transacion = tm.transfer(txt_origin.getText(), txt_destination.getText(), monto_transfer);
+                
+                if(transacion) {
+                	JOptionPane.showMessageDialog(null, "Transferencia realizada correctamente");
+                }
                 
                 // Si pasa todas las validaciones, proceder con la transferencia
-                JOptionPane.showMessageDialog(null, "Transferencia realizada correctamente");
+//                JOptionPane.showMessageDialog(null, "Transferencia realizada correctamente");
                 // Aquí iría la lógica real de la transferencia
             }
         });
@@ -294,8 +299,10 @@ public class Transfer_view  extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 
 				if (currentUser != null) {
-		            User_view userView = new User_view();
-		            userView.dashboard(currentUser, currentAccounts);
+//		            User_view userView = new User_view();
+//		            userView.dashboard(currentUser, currentAccounts);
+		            User_controller uc = new User_controller();
+		            uc.user_dashboard(currentUser.getId());
 		        } else {
 		            JOptionPane.showMessageDialog(null, "Error: No se encontró la información del usuario.");
 		        }

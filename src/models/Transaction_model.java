@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.JOptionPane;
+
 import config.DBConfig;
 
 public class Transaction_model {
@@ -14,92 +16,7 @@ public class Transaction_model {
     String url = credentials.getUrl();
     String userNameDB = credentials.getUsername();
     String passwordDB = credentials.getPassword();
-    
-    public boolean deposit(String accountNumber, double amount) {
-        if (amount < 0.1) {
-            System.out.println("El monto debe ser al menos $0.1");
-            return false;
-        }
-        
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection(url, userNameDB, passwordDB);
-            conn.setAutoCommit(false); // Iniciar transacción
-            
-            // 1. Verificar que la cuenta existe y obtener su tipo
-            String checkAccountSql = "SELECT account_type, balance FROM accounts WHERE account_number = ?";
-            String accountType = "";
-            double currentBalance = 0;
-            
-            try (PreparedStatement checkStmt = conn.prepareStatement(checkAccountSql)) {
-                checkStmt.setString(1, accountNumber);
-                ResultSet rs = checkStmt.executeQuery();
-                
-                if (!rs.next()) {
-                    System.out.println("La cuenta no existe: " + accountNumber);
-                    conn.rollback();
-                    return false;
-                }
-                
-                accountType = rs.getString("account_type");
-                currentBalance = rs.getDouble("balance");
-            }
-            
-            // 2. Validar límite para cuentas normales
-            if (accountType.equals("normal") && (currentBalance + amount) > 1000) {
-                System.out.println("Cuenta normal no puede exceder $1000. Saldo actual: $" + currentBalance);
-                conn.rollback();
-                return false;
-            }
-            
-            // 3. Actualizar el saldo
-            String updateSql = "UPDATE accounts SET balance = balance + ? WHERE account_number = ?";
-            try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
-                updateStmt.setDouble(1, amount);
-                updateStmt.setString(2, accountNumber);
-                int affectedRows = updateStmt.executeUpdate();
-                
-                if (affectedRows == 0) {
-                    conn.rollback();
-                    return false;
-                }
-            }
-            
-            // 4. Registrar la transacción
-            String transactionSql = "INSERT INTO transactions (transaction_type, amount, destination_account) VALUES (?, ?, ?)";
-            try (PreparedStatement transStmt = conn.prepareStatement(transactionSql)) {
-                transStmt.setString(1, "deposit");
-                transStmt.setDouble(2, amount);
-                transStmt.setString(3, accountNumber);
-                transStmt.executeUpdate();
-            }
-            
-            conn.commit();
-            System.out.println("Depósito exitoso: $" + amount + " en cuenta " + accountNumber);
-            return true;
-            
-        } catch (SQLException e) {
-            if (conn != null) {
-                try {
-                    conn.rollback();
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
-            }
-            System.out.println("Error en depósito: " + e.getMessage());
-            return false;
-        } finally {
-            if (conn != null) {
-                try {
-                    conn.setAutoCommit(true);
-                    conn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-    
+     
     //SE UTLIZA PARA TRANFERIR CUENTAS
     public boolean transfer(String originAccount, String destinationAccount, double amount) {
         if (amount < 1) {
@@ -120,14 +37,22 @@ public class Transaction_model {
             
             // 1. Verificar que ambas cuentas existan
             if (!accountExists(originAccount, conn) || !accountExists(destinationAccount, conn)) {
-                System.out.println("Una o ambas cuentas no existen");
+            	JOptionPane.showMessageDialog(null, "Una o ambas cuentas no existen", "Error", JOptionPane.ERROR_MESSAGE);
                 conn.rollback();
                 return false;
             }
             
             // 2. Verificar saldo suficiente en cuenta origen
             if (!hasSufficientBalance(originAccount, amount, conn)) {
-                System.out.println("Saldo insuficiente en cuenta origen");
+            	JOptionPane.showMessageDialog(null, "Saldo insuficiente en cuenta origen", "Error", JOptionPane.ERROR_MESSAGE);
+                conn.rollback();
+                return false;
+            }
+            
+            //Verificar que la cuenta destino no supere 10,000 si es normal
+            if (!canReceiveAmount(destinationAccount, amount, conn)) {
+                JOptionPane.showMessageDialog(null, "La cuenta destino es 'normal' y no puede tener más de $10,000 de saldo", 
+                                              "Límite de cuenta normal", JOptionPane.WARNING_MESSAGE);
                 conn.rollback();
                 return false;
             }
@@ -215,4 +140,24 @@ public class Transaction_model {
             return false;
         }
     }
+    
+    private boolean canReceiveAmount(String accountNumber, double amount, Connection conn) throws SQLException {
+        String sql = "SELECT account_type, balance FROM accounts WHERE account_number = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, accountNumber);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                String type = rs.getString("account_type");
+                double currentBalance = rs.getDouble("balance");
+                double newBalance = currentBalance + amount;
+
+                // Si la cuenta es normal y el nuevo saldo excede 10,000, no se permite
+                if (type.equalsIgnoreCase("normal") && newBalance > 10000) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
 }

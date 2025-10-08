@@ -18,10 +18,16 @@ import javax.swing.JPasswordField;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+
+import controller.Account_controller;
+import controller.Transaction_controller;
+import controller.User_controller;
+
 import javax.swing.JScrollPane;
 
 import models.Account;
 import models.Account_model;
+import models.Transaction_model;
 import models.User;
 
 public class User_view extends JFrame {
@@ -96,8 +102,12 @@ public class User_view extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				Transfer_view transfer = new Transfer_view();
-				transfer.setUserData(user, accounts);
+//				Transfer_view transfer = new Transfer_view();
+//				transfer.setUserData(user, accounts);
+
+				Transaction_controller tc = new Transaction_controller();
+				tc.make_transaction(user.getId());
+				
 				dispose();
 
 			}
@@ -113,9 +123,9 @@ public class User_view extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				User_view cuentas = new User_view();
-				
-				cuentas.accounts(user, accounts);
+				int user_id = user.getId();
+				Account_controller ac = new Account_controller();
+				ac.user_accounts(user_id);
 		        
 		        dispose();
 		        
@@ -227,9 +237,8 @@ public class User_view extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				User_view user_view = new User_view();
-				
-				user_view.dashboard(user, account_list);
+				User_controller uc = new User_controller();
+				uc.user_dashboard(user.getId());
 
 				dispose();
 
@@ -353,9 +362,8 @@ public class User_view extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				User_view user_view = new User_view();
-				
-				user_view.dashboard(user, null);
+				User_controller uc = new User_controller();
+				uc.user_dashboard(user.getId());
 
 				dispose();
 
