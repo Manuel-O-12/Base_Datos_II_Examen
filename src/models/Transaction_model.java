@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -118,6 +120,55 @@ public class Transaction_model {
             }
         }
     }
+    
+    public List<Transaction> getTransactionsByUser(int userId) {
+        List<Transaction> transactions = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = DriverManager.getConnection(url, userNameDB, passwordDB);
+
+            // Consulta: transacciones donde la cuenta del usuario sea origen o destino
+            String sql = """
+                SELECT t.id, t.transaction_type, t.amount, 
+                       t.origin_account, t.destination_account, t.transaction_date
+                FROM transactions t
+                INNER JOIN accounts a 
+                    ON t.origin_account = a.account_number 
+                    OR t.destination_account = a.account_number
+                WHERE a.user_id = ?
+                ORDER BY t.transaction_date DESC
+            """;
+
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, userId);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Transaction tr = new Transaction();
+                tr.setId(rs.getInt("id"));
+                tr.setTransactionType(rs.getString("transaction_type"));
+                tr.setAmount(rs.getDouble("amount"));
+                tr.setOriginAccount(rs.getString("origin_account"));
+                tr.setDestinationAccount(rs.getString("destination_account"));
+                tr.setTransactionDate(rs.getTimestamp("transaction_date"));
+
+                transactions.add(tr);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try { if (rs != null) rs.close(); } catch (Exception e) {}
+            try { if (stmt != null) stmt.close(); } catch (Exception e) {}
+            try { if (conn != null) conn.close(); } catch (Exception e) {}
+        }
+
+        return transactions;
+    }
+
     
     private boolean accountExists(String accountNumber, Connection conn) throws SQLException {
         String sql = "SELECT id FROM accounts WHERE account_number = ?";

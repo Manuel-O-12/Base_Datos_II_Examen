@@ -27,6 +27,7 @@ import javax.swing.JScrollPane;
 
 import models.Account;
 import models.Account_model;
+import models.Transaction;
 import models.Transaction_model;
 import models.User;
 
@@ -142,9 +143,8 @@ public class User_view extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				User_view record = new User_view();
-				
-				record.record(user);
+			Transaction_controller tc = new Transaction_controller();
+			tc.transactions_byUser(user.getId());
 
 				dispose();
 
@@ -401,7 +401,7 @@ public class User_view extends JFrame {
 		
 	}
 	
-	public void record(User user) {
+	public void record(User user, List<Transaction> transactions) {
 		
 		setTitle("CENTRO DE HISTORIAL");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -478,10 +478,13 @@ public class User_view extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				User_view dashboard = new User_view();
-				
-				dashboard.dashboard(user, null);
+//				User_view dashboard = new User_view();
+//				
+//				dashboard.dashboard(user, null);
 
+				User_controller uc = new User_controller();
+				uc.user_dashboard(user.getId());
+				
 				dispose();
 
 			}
