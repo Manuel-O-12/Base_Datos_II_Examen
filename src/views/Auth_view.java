@@ -131,9 +131,7 @@ public class Auth_view extends JFrame {
 		            accountText.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
 		            passwordText.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
 
-		            JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso");
-
-		            User_controller uc = new User_controller();
+		       		User_controller uc = new User_controller();
 		            uc.user_dashboard(user.getId());
 
 		            dispose();

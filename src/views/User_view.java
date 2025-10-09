@@ -132,10 +132,29 @@ public class User_view extends JFrame {
 			}
 		});
 		dashboard.add(Btn_accounts);
+		
+		JButton Btn_record = new JButton("Hisorial de transferencias");
+		Btn_record.setSize(200, 30);
+		Btn_record.setLocation(50, 300);
+		Btn_record.setFont(new Font("Calibri", Font.BOLD, 15));
+		Btn_record.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				User_view record = new User_view();
+				
+				record.record(user);
+
+				dispose();
+
+			}
+		});
+		dashboard.add(Btn_record);
 
 		JButton Btn_logout = new JButton("Cerrar Sesión");
 		Btn_logout.setSize(200, 30);
-		Btn_logout.setLocation(50, 300);
+		Btn_logout.setLocation(50, 350);
 		Btn_logout.setFont(new Font("Calibri", Font.BOLD, 15));
 		Btn_logout.addActionListener(new ActionListener() {
 
@@ -373,6 +392,100 @@ public class User_view extends JFrame {
 
 	    this.setContentPane(accounts); // o simplemente add(dashboard);
 	    setVisible(true);
+		
+	}
+	
+	public void record(User user) {
+		
+		setTitle("CENTRO DE HISTORIAL");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(800, 700);
+		setLocationRelativeTo(null);
+		setResizable(true);
+
+		JPanel accounts = new JPanel();
+		accounts.setBackground(Color.decode("#c8eafa"));
+		accounts.setLayout(null);
+
+		JLabel register = new JLabel("HISTORIAL DE MIS CUENTAS");
+		register.setSize(500, 40);
+		register.setLocation(140, 40);
+		register.setHorizontalAlignment(JLabel.CENTER);
+		register.setFont(new Font("Calibri", Font.BOLD, 30));
+		accounts.add(register);
+		
+		
+		JLabel welcome = new JLabel("BIENVENIDO");
+		welcome.setFont(new Font("Calibri", Font.BOLD, 18));
+		welcome.setSize(400, 120);
+		welcome.setLocation(350, 70);
+		accounts.add(welcome);
+	    
+		
+		
+		// SE CREO LA TABLA CON EL HISTORIAL DE CEUNTAS PERO ESTA EN BLANCO YA QUE NO HAY CUENTAS, TAMBIEN SE CREO PARA QUE NO SEA EDITABLE 
+		
+	    String[] columnNames = { "amount", "source_account", "target_account", "time"};
+		DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false; // Hacer que la tabla no sea editable
+			}
+		};
+
+//		models.Account_model accoModel = new Account_model();
+//		List<Account> account_list1 = accoModel.getUserAccounts(user.getAmount());
+//		// Llenar la tabla con datos
+//		for (Account account : account_list1) {
+//			Object[] rowData = { account.getAmount(), account.getSource_account(), account.getTarget_account(),
+//					account.getTime()};
+//			model.addRow(rowData);
+//		}
+
+		// se crea la tabla
+		JTable table = new JTable(model);
+		table.setPreferredScrollableViewportSize(new Dimension(700,300));
+		table.setFillsViewportHeight(true);
+		
+		table.getColumnModel().getColumn(0).setPreferredWidth(10);
+		table.getColumnModel().getColumn(3).setPreferredWidth(10);
+
+		table.setFont(new Font("Arial", Font.PLAIN, 14));
+		table.setRowHeight(25);
+		table.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
+		table.setAutoCreateRowSorter(true); // ordenar por columnas
+
+		
+		JScrollPane scrollpane = new JScrollPane(table);
+		scrollpane.setSize(700,300);
+		scrollpane.setLocation(50, 160);
+		accounts.add(scrollpane);
+		
+		
+		JButton volver = new JButton("Volver");
+		volver.setSize(80, 30);
+		volver.setLocation(10, 10);
+		volver.setHorizontalTextPosition(JButton.CENTER);
+		volver.setFont(new Font("Calibri", Font.BOLD, 15));
+		volver.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				User_view dashboard = new User_view();
+				
+				dashboard.dashboard(user, null);
+
+				dispose();
+
+			}
+		});
+		accounts.add(volver);
+		
+		this.setContentPane(accounts); // o simplemente add(dashboard);
+	    setVisible(true);
+		
+	
 		
 	}
 

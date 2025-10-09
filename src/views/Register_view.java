@@ -258,7 +258,7 @@ public class Register_view extends JFrame {
 					um.registerUser(name, paternalSurname, motherSurname, email, password);
 					
 					JOptionPane.showMessageDialog(null, "Usuario creado");
-							
+//////////////////////////////////////					/////////////////////////////////////////////////		
 					Auth_view login = new Auth_view();
 					
 					login.login();
