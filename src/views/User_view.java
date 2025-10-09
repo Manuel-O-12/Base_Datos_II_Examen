@@ -364,8 +364,14 @@ public class User_view extends JFrame {
 	            
 	            Account_model am = new Account_model();
 	            am.createAccount(idUser, tipo, numeroCuenat);
-
+	            
 	            JOptionPane.showMessageDialog(null,"Cuenta creada correctamente");
+	            
+	            User_controller uc = new User_controller();
+	            uc.user_dashboard(idUser);
+				dispose();
+
+
 	        }
 	    });
 		accounts.add(create);
