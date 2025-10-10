@@ -37,7 +37,8 @@ public class User_model {
             pstmt.setString(5, password); 
                         
             int affectedRows = pstmt.executeUpdate(); // Faltaba esta línea me lleva la VRG
-
+            return affectedRows > 0;
+            
         } catch (SQLException e) {
             e.printStackTrace();
         }

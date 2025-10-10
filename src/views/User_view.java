@@ -63,7 +63,7 @@ public class User_view extends JFrame {
 		welcome.setLocation(350, 100);
 	    dashboard.add(welcome);
 	    
-	    JLabel lbl_nombre = new JLabel(user.getFirstName() + user.getFirstName());
+	    JLabel lbl_nombre = new JLabel(user.getFirstName() + " " + user.getLastName());
 	    lbl_nombre.setFont(new Font("Calibri", Font.BOLD, 18));
 	    lbl_nombre.setSize(400, 100);
 	    lbl_nombre.setLocation(350, 140);
@@ -331,19 +331,6 @@ public class User_view extends JFrame {
 	    int numeroCuenta = 10000000 + rand.nextInt(90000000);
 	    txt_number.setText(String.valueOf(numeroCuenta));
 	    
-//	    JButton btn_trigger = new JButton("Generar número");
-//	    btn_trigger.setSize(200, 30);
-//	    btn_trigger.setLocation(350, 250);
-//	    btn_trigger.setFont(new Font("Calibri", Font.BOLD, 15));
-//	    btn_trigger.addActionListener(new ActionListener() {
-//	        @Override
-//	        public void actionPerformed(ActionEvent e) {
-//	            Random rand = new Random();
-//	            int numeroCuenta = 10000000 + rand.nextInt(99999999);
-//	            txt_number.setText(String.valueOf(numeroCuenta));
-//	        }
-//	    });
-//		accounts.add(btn_trigger);
 		
 		JButton create = new JButton("CREAR CUENTA");
 		create.setSize(150,30);
@@ -413,7 +400,7 @@ public class User_view extends JFrame {
 		accounts.setBackground(Color.decode("#c8eafa"));
 		accounts.setLayout(null);
 
-		JLabel register = new JLabel("HISTORIAL DE MIS CUENTAS");
+		JLabel register = new JLabel("HISTORIAL DE TRANSFERENCIAS");
 		register.setSize(500, 40);
 		register.setLocation(140, 40);
 		register.setHorizontalAlignment(JLabel.CENTER);
@@ -431,7 +418,7 @@ public class User_view extends JFrame {
 		
 		// SE CREO LA TABLA CON EL HISTORIAL DE CEUNTAS PERO ESTA EN BLANCO YA QUE NO HAY CUENTAS, TAMBIEN SE CREO PARA QUE NO SEA EDITABLE 
 		
-	    String[] columnNames = { "amount", "source_account", "target_account", "time"};
+	    String[] columnNames = { "id", "transaction_type", "amount","origin_account","destination_account", "transaction_date"};
 		DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -442,11 +429,11 @@ public class User_view extends JFrame {
 //		models.Account_model accoModel = new Account_model();
 //		List<Account> account_list1 = accoModel.getUserAccounts(user.getAmount());
 //		// Llenar la tabla con datos
-//		for (Account account : account_list1) {
-//			Object[] rowData = { account.getAmount(), account.getSource_account(), account.getTarget_account(),
-//					account.getTime()};
-//			model.addRow(rowData);
-//		}
+		for (Transaction  t : transactions ) {
+			Object[] rowData = { t.getId(), t.getTransactionType(), t.getAmount(),
+					t.getOriginAccount(), t.getDestinationAccount(), t.getTransactionDate()};
+			model.addRow(rowData);
+		}
 
 		// se crea la tabla
 		JTable table = new JTable(model);

@@ -18,7 +18,10 @@ import javax.swing.UIManager;
 
 import com.formdev.flatlaf.FlatLightLaf;
 
+import controller.User_controller;
 import models.Account_model;
+import models.Auth_model;
+import models.User;
 import models.User_model;
 
 public class Register_view extends JFrame {
@@ -193,14 +196,19 @@ public class Register_view extends JFrame {
 					Txt_confirm_password.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
 
 					
-					//JOptionPane.showMessageDialog(null,"Las contraseñas no coinciden","Error",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null,"Las contraseñas no puede estar vacia","Error",JOptionPane.ERROR_MESSAGE);
+				}
+				else if (password.length() < 6) {
+				    Txt_password.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+				    Txt_confirm_password.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+				    JOptionPane.showMessageDialog(null, "La contraseña debe tener al menos 6 caracteres", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 				else if (!password.equals(confirm_password)){
 					
 					Txt_password.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
 					Txt_confirm_password.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
 					
-					//JOptionPane.showMessageDialog(null,"Las contraseñas no coinciden","Error",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null,"Las contraseñas no coinciden","Error",JOptionPane.ERROR_MESSAGE);
 
 					
 				}
@@ -217,28 +225,37 @@ public class Register_view extends JFrame {
 				
 				boolean flag5 = false;
 				String email = Txt_email.getText().trim();
-				
-				if (email.equals("")) {
-					Txt_email.setBorder(BorderFactory.createLineBorder(Color.RED,3));
-					
-					//JOptionPane.showMessageDialog(null, "El correo electrónico no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
-				}
-				else {
-					
-					Account_model accountModel = new Account_model();
-					boolean emailExists = accountModel.emailExists(email);
-					
-					if (emailExists) {
-						Txt_email.setBorder(BorderFactory.createLineBorder(Color.RED,3));
-						
-                        JOptionPane.showMessageDialog(null, "El correo electrónico ya está registrado", "Error", JOptionPane.ERROR_MESSAGE);
 
-					}
-					 else {
-	                    Txt_email.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
-	                    flag5 = true;
-	                }
+				// Verificar que no esté vacío
+				if (email.equals("")) {
+					
+				    Txt_email.setBorder(BorderFactory.createLineBorder(Color.RED,3));
+				    
 				}
+				else if (!email.contains("@") || !email.endsWith(".com")) {
+					
+				    Txt_email.setBorder(BorderFactory.createLineBorder(Color.RED,3));
+				    
+				    JOptionPane.showMessageDialog(null, "El correo debe contener @ y .com al final", "Error", JOptionPane.ERROR_MESSAGE);
+				} 
+				else {
+				   
+				    Account_model accountModel = new Account_model();
+				    boolean emailExists = accountModel.emailExists(email);
+
+				    if (emailExists) {
+				    	
+				        Txt_email.setBorder(BorderFactory.createLineBorder(Color.RED,3));
+				        
+				        JOptionPane.showMessageDialog(null, "El correo electrónico ya está registrado", "Error", JOptionPane.ERROR_MESSAGE);
+				        
+				    } else {
+				        Txt_email.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
+				        
+				        flag5 = true;
+				    }
+				}
+
 				
 				
 
@@ -255,15 +272,30 @@ public class Register_view extends JFrame {
 					
 					
 					User_model um = new User_model();
-					um.registerUser(name, paternalSurname, motherSurname, email, password);
 					
-					JOptionPane.showMessageDialog(null, "Usuario creado");
-//////////////////////////////////////					/////////////////////////////////////////////////		
-					Auth_view login = new Auth_view();
+					boolean registrar = um.registerUser(name, paternalSurname, motherSurname, email, password);
 					
-					login.login();
-					
-					dispose();
+					if (registrar) {
+				        JOptionPane.showMessageDialog(null, "Usuario creado correctamente");
+
+				        
+				        Auth_model am = new Auth_model();
+				        User nuevoUser = am.login(email, password);
+
+				        if (nuevoUser != null) {
+				            
+				            User_controller uc = new User_controller();
+				            
+				            uc.user_dashboard(nuevoUser.getId());
+				            
+				            dispose();
+				        } else {
+				            JOptionPane.showMessageDialog(null, "Error al iniciar sesión", "Error", JOptionPane.ERROR_MESSAGE);
+				        }
+
+				    } else {
+				        JOptionPane.showMessageDialog(null, "Error al registrar usuario", "Error", JOptionPane.ERROR_MESSAGE);
+				    }
 				}
 
 			}

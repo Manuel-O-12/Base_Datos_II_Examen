@@ -278,6 +278,9 @@ public class Transfer_view  extends JFrame{
                 
                 if(transacion) {
                 	JOptionPane.showMessageDialog(null, "Transferencia realizada correctamente");
+                	
+                	User_controller uc = new User_controller();
+    	            uc.user_dashboard(currentUser.getId());
                 }
                 
                 // Si pasa todas las validaciones, proceder con la transferencia

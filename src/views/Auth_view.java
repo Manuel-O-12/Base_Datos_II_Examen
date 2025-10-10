@@ -65,7 +65,7 @@ public class Auth_view extends JFrame {
 		start.setFont(new Font("Calibri", Font.BOLD, 30));
 		Panel.add(start);
 
-		JLabel account = new JLabel("Numero de Cuenta: ");
+		JLabel account = new JLabel("Correo electronico: ");
 		account.setSize(200, 40);
 		account.setLocation(250, 100);
 		account.setFont(new Font("Calibri", Font.BOLD, 15));
