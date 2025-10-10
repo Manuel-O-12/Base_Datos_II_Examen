@@ -48,11 +48,10 @@ Muestra todas las opciones que puede hacer el usuario como crear mas cuentas, re
 
 ## ⚙️ Instalación y Ejecución
 
-Para iniciar sesion con una cuenta 
+Para iniciar sesion
 
  - Descargar el .JAR
- - correo: freedb_gabr_user
- - Contraseña: g3F?E5mMQYQ&b8n
+ - Se necesita crear un nuevo usuario que se puede hacer con el boton 'REGISTAR'
 
 ##
 ## 🗂️ Estructura del Proyecto
