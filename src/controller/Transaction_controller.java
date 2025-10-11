@@ -25,13 +25,14 @@ public class Transaction_controller {
 		this.model_user = new User_model();
 		this.model_account = new Account_model();
 		this.model_transaction = new Transaction_model();
-		this.transferView = new Transfer_view();
+//		this.transferView = new Transfer_view();
 	}
 	
 	public void make_transaction(int id) {
 		User myUser =  model_user.getBasicUserInfo(id);
 		List<Account> myAccount = model_account.getUserAccounts(id);
 		
+        Transfer_view transferView = new Transfer_view();
 		transferView.setUserData(myUser, myAccount);
 	}
 	
